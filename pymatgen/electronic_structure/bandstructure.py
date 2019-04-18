@@ -2,7 +2,6 @@
 # Copyright (c) Pymatgen Development Team.
 # Distributed under the terms of the MIT License.
 
-from __future__ import unicode_literals
 
 import numpy as np
 import math
@@ -130,7 +129,7 @@ class Kpoint(MSONable):
                 "@class": self.__class__.__name__}
 
 
-class BandStructure(object):
+class BandStructure:
     """
     This is the most generic band structure data possible
     it's defined by a list of kpoints + energies for each of them
@@ -205,6 +204,7 @@ class BandStructure(object):
         self.labels_dict = {}
         self.structure = structure
         self.projections = projections or {}
+        self.projections = {k: np.array(v) for k, v in self.projections.items()}
 
         if labels_dict is None:
             labels_dict = {}
@@ -681,7 +681,7 @@ class BandStructureSymmLine(BandStructure, MSONable):
     def __init__(self, kpoints, eigenvals, lattice, efermi, labels_dict,
                  coords_are_cartesian=False, structure=None,
                  projections=None):
-        super(BandStructureSymmLine, self).__init__(
+        super().__init__(
             kpoints, eigenvals, lattice, efermi, labels_dict,
             coords_are_cartesian, structure, projections)
         self.distance = []
